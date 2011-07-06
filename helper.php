@@ -4,10 +4,11 @@
 * @package mod_thick_rss
 * @author $Format:%an$ $Format:%ae$
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @version 3.0 (build $version$)
+* @version 3.0
 * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
 * @description: Joomla module to show list of RSS feeds and link to news in modal window
 **/
+
 
 // following line is to prevent direct access to this script via the url
 defined('_JEXEC') or die('Restricted access');
@@ -16,12 +17,8 @@ class modThickRSSHelper
 {
 	function getFeed(&$params)
 	{
-	// we use fresher SimplePie than Joomla
-	require_once(dirname(__FILE__).DS.'simplepie'.DS.'simplepie.inc.php');
-	if(!class_exists('SimplePie')) die ("<h3>Error on loading feed parser class!</h3>");
-
-	// feed output
-		// check if cache directory is writeable
+	
+	// check if cache directory is writeable
 		$cacheDir 		= JPATH_CACHE .'/';	
 		if ( !is_writable( $cacheDir ) ) {	
 			return 'Cache Directory Unwriteable';
@@ -48,21 +45,15 @@ class modThickRSSHelper
 		$rssurls = preg_split("/[\s]+/", $rssurl); 
 		
 		$content_buffer	.=  '<div class="rss-container'.$moduleclass_sfx.'" style="text-align:left;">';
-		$content_buffer	.= "<!-- RSS BROWSER , using SimplePie v." .SIMPLEPIE_VERSION.", http://www.lbm-services.de  START -->\n";
+		$content_buffer	.= "<!-- RSS BROWSER, http://www.lbm-services.de  START -->\n";
 		foreach($rssurls as $rssurl){
 			
-			//$content_buffer	.= $rssurl . "<br/>";
-						
 			if( trim($rssurl) != "") { 			// only if array element is not empty
-		
-			$feed = new SimplePie();
-			
+
 			if (!empty($rssurl)) {
+
+			$feed = JFactory::getXMLParser( 'rss', array('rssUrl' => $rssurl ) );
 				
-				$feed->set_feed_url($rssurl);
-				//echo $rssurl. "<br/>"; //debug
-				
-				//set / override Joomla HTML page metatag charset to match RSS character encoding
 				$feed->handle_content_type(); 
 				$feed->set_cache_location($cacheDir);
 				$feed->set_cache_duration( $rsscache*60 );
