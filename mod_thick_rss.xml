@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.6.0" client="site" method="upgrade">
-<name>RSS Browser 2.7</name>
+<name>RSS Browser 3.0</name>
 <author>Horst Lindlbauer</author>
-<creationDate>May 2010</creationDate>
-<copyright>(C) 2008, 2009, 2010 Horst Lindlbauer. All Rights Reserved</copyright>
+<creationDate>July 2011</creationDate>
+<copyright>(C) 2008, 2009, 2010, 2011 Horst Lindlbauer. All Rights Reserved</copyright>
 <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 <authorEmail>info@lbm-services.de</authorEmail>
 <authorUrl>http://lbm-services.de</authorUrl>
-<version>2.7</version>
+<version>3.0</version>
 <description>
 	<![CDATA[
-	v.2.7 : Compatibility issue with Opera fixed, placeholder images in tooltip text (IE issue) , window title = feed title
-	v.2.6 : Javascript issue fixed, new feature: feed item description below url<br/>
-	v.2.0b native J!1.5 Module, using Joomla Mootools, to show list of RSS-Feeds and display full-length news in a customizable modal window with navigation (browsing).
-Thickbox opens on your page, so the user does not have to leave your site or switch to another window to read all news provided.<br/><br />
+	RSS Browser module to import RSS Feeds and show full-text feed messages in a customizable modal window with navigation. <br />
+	v.3.0 native Joomla 1.6 build, using Joomla's included Mootools and Joomla Simplepie libraries.<br />
+   RSS news page opens in a modal window, so the user does not have to leave your site or switch to another window to read all news provided.<br/><br />
 
 Some more features:
 <ul>
@@ -28,7 +27,7 @@ Some more features:
 </ul>
 <br />
 To run a compatibility check for Simple Pie click <a href="../modules/mod_thick_rss/simplepie/sp_compatibility_test.php" target="_new">here</a>.<br/>
-If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-services.de" target="_blank">http://www.lbm-services.de</a>. <br/>
+If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-services.de/component/remository" target="_blank">http://www.lbm-services.de</a>. <br/>
 	
 	]]>
 	</description>
@@ -36,7 +35,6 @@ If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-
 	<filename module="mod_thick_rss">mod_thick_rss.php</filename>
 	<filename module="mod_thick_rss">helper.php</filename>
 	<filename module="mod_thick_rss">tmpl/default.php</filename>
-	<filename>simplepie/simplepie.inc.php</filename>
 	<filename>simplepie/sp_compatibility_test.php</filename>
     <filename>includes/smoothbox.css</filename>
     <filename>includes/smoothbox.js</filename>
@@ -45,17 +43,14 @@ If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-
 	
 	</files>
 <config>
-        <fields name="fields">
+        <fields name="params">
 <fieldset name="basic">
-	
-
 		<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
 		<field name="cache" type="radio" default="0" label="Module Cache" description="Select whether to cache the content of this module">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
 		<field name="rsscache" type="text" size="6" default="60" label="RSS Cache time (min.)" description="Set the cache time for this RSS feed in minutes!" />
-		<field name="@spacer" type="spacer" default="" label="" description="" />
 		<field name="rssurl" type="textarea" cols="50" rows="5" default="" label="RSS URLs" description="Enter the URLs of the RSS/RDF feed (delimited by line feed)" />
 		<field name="rsstitle" type="radio" default="1" label="Feed Title" description="Display news feed title">
 			<option value="1">Yes</option>
@@ -77,6 +72,8 @@ If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
+		</fieldset>
+		<fieldset name="advanced">
 			<field name="@spacer" type="spacer" default="" label="Tooltip Settings" description="These settings below are related to the mouseover tooltip" />
 		<field name="enable_tooltip" type="radio" default="yes" label="Enable Tooltip" description="Show tooltip? e.g this one!">
 			<option value="yes">Yes</option>
