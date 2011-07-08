@@ -9,9 +9,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  */
 
-var path = document.location.pathname;
-var dir = path +"modules/mod_thick_rss/images/";
-
+var dir = window.basepath +"/modules/mod_thick_rss/images/";
 
 // on page load call TB_init
 window.addEvent('domready', TB_init);

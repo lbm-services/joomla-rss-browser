@@ -14,9 +14,9 @@ defined('_JEXEC') or die('Restricted access');
 require_once (dirname(__FILE__).DS.'helper.php');
 
 
-$live_site= JURI::base() ; 
+$live_site= JURI::base(true) ; 
 
-$mod_path = $live_site . str_replace('\\', '/', substr( dirname(__FILE__), strlen(JPATH_BASE)+1,(strlen(__FILE__)-1)));
+$mod_path = $live_site . "/" . str_replace('\\', '/', substr( dirname(__FILE__), strlen(JPATH_BASE)+1,(strlen(__FILE__)-1)));
 
 // vorhandene Scripte laden
 $document =& JFactory::getDocument();
@@ -34,13 +34,17 @@ foreach($scripts as $script=>$value)
 
 //print_r($scripts);
 // Experimental: smoothbox nicht 2x laden, Thickbox installiert?
-if (!$loaded) $html .="<script type=\"text/javascript\" src=\"" . $mod_path . "/includes/smoothbox.js\"></script>\n";
-$html .="<link rel=\"stylesheet\" href=\"". $mod_path. "/includes/smoothbox.css\" type=\"text/css\" media=\"screen\" />\n";
-$document->addCustomTag( $html );
+$html .= '<script type="text/javascript">
+			var basepath = "'. $live_site .'";
+			</script>'.PHP_EOL;
 
+if (!$loaded) $html .="<script type=\"text/javascript\" src=\"" . $mod_path . "/includes/smoothbox.js\"></script>".PHP_EOL;
+$html .="<link rel=\"stylesheet\" href=\"". $mod_path. "/includes/smoothbox.css\" type=\"text/css\" media=\"screen\" />".PHP_EOL;
+$document->addCustomTag( $html );
 
 // Get data from helper class
 $rss_content = modThickRSSHelper::getFeed($params);
 // Run default template script for output
 require(JModuleHelper::getLayoutPath('mod_thick_rss'));
+
 
