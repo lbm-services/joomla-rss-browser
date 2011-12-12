@@ -2,7 +2,7 @@
 /**
 * @file mod_thick_rss.php  $Format:%ci$ 
 * @package mod_thick_rss
-* @author $Format:%an$ $Format:%ae$
+* @author Horst Lindlbauer info@lbm-services.de
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @version 3.1 (build $version$)
 * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
