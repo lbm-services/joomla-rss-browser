@@ -4,7 +4,7 @@
 * @package mod_thick_rss
 * @author $Format:%an$ $Format:%ae$
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @version 3.0
+* @version 3.1
 * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
 * @description: Joomla module to show list of RSS feeds and link to news in modal window
 **/
@@ -52,7 +52,10 @@ class modThickRSSHelper
 
 			if (!empty($rssurl)) {
 
-			$feed = JFactory::getXMLParser( 'rss', array('rssUrl' => $rssurl ) );
+			if (!$feed = JFactory::getXMLParser( 'rss', array('rssUrl' => $rssurl ) )) {
+				JError::raiseWarning('SOME_ERROR_CODE',  $rssurl);
+				continue; 
+			}
 				
 				$feed->handle_content_type(); 
 				$feed->set_cache_location($cacheDir);
