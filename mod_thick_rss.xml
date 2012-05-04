@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="1.6.0" client="site" method="upgrade">
-<name>RSS Browser 3.1</name>
+<name>RSS Browser 3.2</name>
 <author>Horst Lindlbauer</author>
-<creationDate>Dec 2011</creationDate>
-<copyright>(C) 2008, 2009, 2010, 2011 Horst Lindlbauer. All Rights Reserved</copyright>
+<creationDate>May 2012</creationDate>
+<copyright>(C) 2008-2012 Horst Lindlbauer. All Rights Reserved</copyright>
 <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 <authorEmail>info@lbm-services.de</authorEmail>
 <authorUrl>http://lbm-services.de</authorUrl>
-<version>3.1</version>
+<version>3.2</version>
 <description>
 	<![CDATA[
 	RSS Browser module to import RSS Feeds and show full-text feed messages in a customizable modal window with navigation. <br />
-	v.3.0 native Joomla 1.6 build, using Joomla's included Mootools and Joomla Simplepie libraries.<br />
    RSS news page opens in a modal window, so the user does not have to leave your site or switch to another window to read all news provided.<br/><br />
+   	native Joomla 1.6/1.7/2.5 build, using Joomla's included Mootools and Simplepie libraries.<br />
 
 Some more features:
 <ul>
@@ -72,6 +72,7 @@ If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
+		<field name="desc_limit" type="text" size="6" default="0" label="Item Description Char Limit" description="Limit number of characters for description if Item Description is set. 0 = complete description is displayed (default: 0)" />
 		</fieldset>
 		<fieldset name="advanced">
 			<field name="@spacer" type="spacer" default="" label="Tooltip Settings" description="These settings below are related to the mouseover tooltip" />
