@@ -5,6 +5,9 @@
  *
  * Licensed under the MIT License:
  *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * ed. for RSS Browser by Horst Lindlbauer, lbm-services.de
+ *
  */
 
 
@@ -134,3 +137,18 @@ img.weblink{
 	border: none!important; 
 	margin:0!important;
 }
+
+/** Feed Item Date Styles **/
+
+span.rssfeed_date {
+	font-style: italic;
+	}
+
+span.rssfeed_date:before {
+	content: " ( ";
+	}
+	
+
+span.rssfeed_date:after {
+	content: " ) ";
+	}

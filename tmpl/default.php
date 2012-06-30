@@ -1,10 +1,10 @@
 <?php
 /**
-* @version tmpl/default.php  2009/08/10 08:53:44
+* @version tmpl/default.php  $Format:%ci$
 * @package mod_thick_rss
 * @author Horst Lindlbauer info@lbm-services.de
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @version 2.6 (build 47)
+* @version 
 * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
 * @description: Joomla module to show list of RSS-Feeds, based on Slick RSS but using simplepie parser and Thickbox to display news.
 **/

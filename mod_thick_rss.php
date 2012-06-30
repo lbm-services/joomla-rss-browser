@@ -4,7 +4,7 @@
 * @package mod_thick_rss
 * @author Horst Lindlbauer info@lbm-services.de
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @version 3.2 (build $version$)
+* @version 3.3 (build $version$)
 * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
 * @description: Joomla module to show list of RSS feeds and link to news in modal window
 **/
