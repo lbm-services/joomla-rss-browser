@@ -52,10 +52,6 @@ If you like RSS Browser, we appreciate your donation at <a href="http://www.lbm-
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
-		<field name="dateposition" type="radio" default="0" label="Item Date" description="Position of feed item's date">
-			<option value="1">prepend</option>
-			<option value="0">append</option>
-		</field>
 		<field name="rssdesc" type="radio" default="1" label="Feed Description" description="Show the description text for the whole Feed">
 			<option value="1">Yes</option>
 			<option value="0">No</option>
