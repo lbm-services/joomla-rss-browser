@@ -2,12 +2,12 @@
 <extension type="module" version="1.6.0" client="site" method="upgrade">
 <name>RSS Browser 3.3</name>
 <author>Horst Lindlbauer</author>
-<creationDate>June 2012</creationDate>
+<creationDate>July 2012</creationDate>
 <copyright>(C) 2008-2012 Horst Lindlbauer. All Rights Reserved</copyright>
 <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 <authorEmail>info@lbm-services.de</authorEmail>
 <authorUrl>http://lbm-services.de</authorUrl>
-<version>3.3</version>
+<version>3.3.1</version>
 <description>
 	<![CDATA[
 	RSS Browser module to import RSS Feeds and show full-text feed messages in a customizable modal window with navigation. <br />
