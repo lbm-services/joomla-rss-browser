@@ -1,10 +1,10 @@
 <?php
 /**
- * @file helper.php  2013-10-25 11:02:23 +0200
+ * @file helper.php  $Format:%ci$
  * @package mod_thick_rss
  * @author Horst Lindlbauer info@lbm-services.de
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @ $version: 3.4$
+ * @ $version: 3.4.2$
  * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
  * @description: Joomla module to show list of RSS feeds and link to news in modal window
  **/

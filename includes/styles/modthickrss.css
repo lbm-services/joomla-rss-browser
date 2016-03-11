@@ -1,0 +1,23 @@
+/** Feed Item Date Styles **/
+
+span.rssfeed_date {
+	font-style: italic;
+	}
+
+span.rssfeed_date:before {
+	content: " ( ";
+	}
+	
+
+span.rssfeed_date:after {
+	content: " ) ";
+	}
+
+ul.rssfeed_list {
+    margin-left:0px;
+    padding-left:0px;
+}
+
+.rss-container {
+    text-align:left;
+}
