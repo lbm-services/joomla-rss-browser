@@ -1,10 +1,10 @@
 <?php
 /**
- * @file helper.php  $Format:%ci$
+ * @file helper.php  2013-10-25 11:02:23 +0200
  * @package mod_thick_rss
  * @author Horst Lindlbauer info@lbm-services.de
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @version 3.3
+ * @ $version: 3.4$
  * @credit: Boris Popoff (smoothbox), Ryan Parman, Geoffrey Sneddon (SimplePie), Codey Lindley (Thickbox), David Thomas (Slick RSS)
  * @description: Joomla module to show list of RSS feeds and link to news in modal window
  **/
@@ -12,6 +12,8 @@
 
 // following line is to prevent direct access to this script via the url
 defined('_JEXEC') or die('Restricted access');
+
+jimport('simplepie.simplepie');
 
 class modThickRSSHelper
 {
@@ -41,24 +43,48 @@ class modThickRSSHelper
 		$rsstitle			= $params->get( 'rsstitle', 1 );
 		$rsscache			= $params->get( 'rsscache', 60 );
 		//Custom
-		$enable_tooltip     = $params->get( 'enable_tooltip','no' );
-		$moduleclass_sfx 	= $params->get( 'moduleclass_sfx', '' );
+		$enable_tooltip 		= $params->get( 'enable_tooltip','no' );
+		$moduleclass_sfx 		= $params->get( 'moduleclass_sfx', '' );
+		$disable_modal     		= $params->get( 'disable_modal', 0 );
+		$disable_errors    		= $params->get( 'disable_errors', 0 );
 
 
 		$content_buffer	= '';
 		$rssurls = preg_split("/[\s]+/", $rssurl);
 
-		$content_buffer	.=  '<div class="rss-container'.$moduleclass_sfx.'" style="text-align:left;">';
 		$content_buffer	.= "<!-- RSS BROWSER, http://www.lbm-services.de  START -->\n";
+		$content_buffer	.=  '<div class="rss-container'.$moduleclass_sfx.'">';
+		
 		foreach($rssurls as $rssurl){
 
 			if( trim($rssurl) != "") { 			// only if array element is not empty
 
 				if (!empty($rssurl)) {
 
-					if (!$feed = JFactory::getXMLParser( 'rss', array('rssUrl' => $rssurl,  'cache_time' => $rsscache*60  ) ))
+				$feed = new SimplePie();
+				$feed->set_feed_url($rssurl);
+				//echo $rssurl. "<br/>"; //debug
+				
+				//set / override Joomla HTML page metatag charset to match RSS character encoding
+				$feed->handle_content_type(); 
+				$feed->set_cache_location($cacheDir);
+				$feed->set_cache_duration( $rsscache*60 );
+				
+
+				if (!$feed->init())
 					{
-						JError::raiseWarning('SOME_ERROR_CODE',  $rssurl);
+                    if ( 0 == $disable_errors){
+                        JFactory::getApplication()->enqueueMessage( "Could not load feed: $rssurl", 'error');
+                    } 
+                JLog::addLogger(
+                   array(
+                        'text_file' => 'mod_thick_rss.connection_errors.php',
+                        'text_entry_format' => '{DATETIME} {PRIORITY} {MESSAGE}'
+                   ),
+                   JLog::ALL & ~JLog::DEBUG,
+                   array('mod_thick_rss')
+               );
+                        JLog::add("Could not load feed: $rssurl", JLog::ERROR, 'mod_thick_rss' );
 						continue;
 					}
 				}
@@ -76,14 +102,17 @@ class modThickRSSHelper
 					else $cChr = "&";
 
 					if ( $rssimage && $iUrl ) {
-						$content_buffer .= '<a href="'. JFilterOutput::ampReplace($iLink . $cChr.'keepThis=true&TB_iframe=true&height='. $newsWinY .'&width='. $newsWinX) .'" title="'.$feed_title .'" class="smoothbox"><img style="display:inline;" src="'. $iUrl .'" alt="'. $iTitle .'" border="0"/></a>';
+						if ($disable_modal == 0 ) $content_buffer .= '<a href="'. JFilterOutput::ampReplace($iLink . $cChr.'keepThis=true&TB_iframe=true&height='. $newsWinY .'&width='. $newsWinX) .'" title="'.$feed_title .'" class="lightbox"><img style="display:inline;" src="'. $iUrl .'" alt="'. $iTitle .'" border="0"/></a>';
+                         			else $content_buffer .= '<a href="javascript://" title="'.$iTitle .'"  onclick="window.open(\''.$ilink.'\',\'news\',\'toolbar=no,location=no,scrollbars=1,status=no,menubar=no,width=' .$newsWinX.',height=' .$newsWinY.', top=50,left=150\').focus();"><img style="display:inline;" src="'. $iUrl .'" alt="'. $iTitle .'" border="0"/></a>';
+						
 					}
 					if (strpos($feed_link,"?") === false ) $cChr = "?";
 					else $cChr = "&";
 
 					if ($rsstitle) {
 						$content_buffer .= "<h4 class=\"rssfeed_title".$moduleclass_sfx."\">";
-						$content_buffer .= '<a href="'. JFilterOutput::ampReplace($feed_link . $cChr.'keepThis=true&TB_iframe=true&height='. $newsWinY .'&width='. $newsWinX) .'" title="'.$feed_title .'" class="smoothbox">';
+						if ($disable_modal == 0 ) $content_buffer .= '<a href="'. JFilterOutput::ampReplace($feed_link . $cChr.'keepThis=true&TB_iframe=true&height='. $newsWinY .'&width='. $newsWinX) .'" title="'.$feed_title .'" class="lightbox">';
+						else $content_buffer .= '<a href="javascript://" title="'.$feed_title .'" onclick="window.open(\''.$feed_link.'\',\'news\',\'toolbar=no,location=no,scrollbars=1,status=no,menubar=no,width=' .$newsWinX.',height=' .$newsWinY.', top=50,left=150\').focus();">';
 						$content_buffer .= $feed_title;
 						$content_buffer .= "</a></h4>\n";
 					}
@@ -100,7 +129,7 @@ class modThickRSSHelper
 
 
 
-					$content_buffer .= "		<ul class=\"rssfeed_list" . $moduleclass_sfx . "\" style=\"margin-left:0px;padding-left:0px;\" >\n";
+					$content_buffer .= "		<ul class=\"rssfeed_list" . $moduleclass_sfx . "\">\n";
 					for ($j = 0; $j < $totalItems; $j++) {
 
 						$currItem =& $feed->get_item($j);
@@ -146,7 +175,8 @@ class modThickRSSHelper
 							$tooltip = "";
 						}
 						$content_buffer .= "<li class=\"rssfeed_item" . $moduleclass_sfx . "\">\n";
-						$content_buffer .= '<a href="' . JFilterOutput::ampReplace($pLink  . $cChr.'keepThis=true&TB_iframe=true&height='. $newsWinY . '&width='. $newsWinX. '&caption='.urlencode($feed_title))  . '" title="'. $tooltip. '" class="smoothbox" rel="news">';
+						if ($disable_modal == 0) $content_buffer .= '<a href="' . $currItem->get_permalink(). '" title="'. $tooltip. '" class="lightbox" data-group="news" data-height="'.$newsWinY .'" data-width="'.$newsWinX.'"  >';
+							else $content_buffer .= '<a href="javascript://" title="'. $tooltip. '" onclick="window.open(\''.$currItem->get_permalink().'\',\'news\',\'toolbar=no,location=no,scrollbars=1,status=no,menubar=no,width=' .$newsWinX.',height=' .$newsWinY.', top=50,left=150\').focus();">';
 						if ($showdate == 1 ){
 							$dateposition == 0 ? $content_buffer .= $item_title . "<span class=\"rssfeed_date" . $moduleclass_sfx . "\">".$date . "</span> " : $content_buffer .= "<span class=\"rssfeed_date" . $moduleclass_sfx . "\"> ".$date . "</span> " . $item_title ;
 						} else {
@@ -172,23 +202,33 @@ class modThickRSSHelper
 	}
 
 
-	function setHeader() {
+	function setHeader(&$params) {
 
+		$disable_modal = $params->get( 'disable_modal', 0 );
+		$style = $params->get( 'design', 'default' );
 		static $instance;
 		$document =& JFactory::getDocument();
 		$live_site= JURI::base(true) ;
 		$mod_path = $live_site . "/modules/mod_thick_rss";
 
+
 		if (!isset($instance)){
 
 			$html = '';
+			$html .="<link rel=\"stylesheet\" href=\"". $mod_path. "/includes/styles/modthickrss.css\" type=\"text/css\" media=\"screen\" />".PHP_EOL;
+		if ($disable_modal == 0) {
+			
 			$html .= '<script type="text/javascript">
 			var basepath = "'. $live_site .'";
 			</script>'.PHP_EOL;
-			$html .="<script type=\"text/javascript\" src=\"" . $mod_path . "/includes/smoothbox.js\"></script>".PHP_EOL;
-			$html .="<link rel=\"stylesheet\" href=\"". $mod_path. "/includes/smoothbox.css\" type=\"text/css\" media=\"screen\" />".PHP_EOL;
-			$document->addCustomTag( $html );
-			$instance = true;
+			$html .= '<script type="application/json" id="easyOptions">
+			{"news": {"overlayOpacity": 0.1}}
+			</script>'.PHP_EOL;
+			$html .="<script type=\"text/javascript\" src=\"" . $mod_path . "/includes/distrib.min.js\"></script>".PHP_EOL;
+			$html .="<link rel=\"stylesheet\" href=\"". $mod_path. "/includes/styles/$style/easybox.min.css\" type=\"text/css\" media=\"screen\" />".PHP_EOL;
+			}
+		$document->addCustomTag( $html );
+		$instance = true;
 		}
 
 	}
