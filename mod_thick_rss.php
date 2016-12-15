@@ -1,6 +1,6 @@
 <?php
 /**
-* @file mod_thick_rss.php  2013-10-25 11:02:23 +0200 
+* @file mod_thick_rss.php  $Format:%ci$
 * @package mod_thick_rss
 * @author Horst Lindlbauer info@lbm-services.de
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
