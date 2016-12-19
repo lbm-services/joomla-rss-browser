@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="1.6.0" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 <name>RSS Browser 3.4.2</name>
 <author>Horst Lindlbauer</author>
 <creationDate>Mar 2016</creationDate>
