@@ -22,10 +22,6 @@ e.g. http://www.heise.de/security/news/news-atom.xml
 
 http://www.lbm-services.de/support/rss-browser-demo
 
-##Report Bugs
-
-- Bugs can be reported here: http://www.lbm-services.de/forum
-
 
 ## Known issues
 
